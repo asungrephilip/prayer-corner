@@ -22,10 +22,11 @@
         <h1>Welcome Back</h1>
         <p>Login to continue your fellowship.</p>
       </div>
-      <form class="auth-form" id="loginForm">
+      <div id="errorBox" class="alert alert-error" style="display: none;"></div>
+      <form class="auth-form" id="loginForm" action="login_process.php" method="POST">
         <div class="form-group">
-          <label for="email">Email or Username</label>
-          <input type="text" id="email" name="email" placeholder="Enter your email or username" required>
+          <label for="identifier">Email or Username</label>
+          <input type="text" id="identifier" name="identifier" placeholder="Enter your email or username" required>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
@@ -49,10 +50,13 @@
   </footer>
 
   <script>
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      alert('Login successful! (Frontend only — no backend connected)');
-    });
+    const errorBox = document.getElementById('errorBox');
+    const params = new URLSearchParams(window.location.search);
+    const error = params.get('error');
+    if (error) {
+      errorBox.textContent = error;
+      errorBox.style.display = 'block';
+    }
   </script>
 </body>
 </html>
