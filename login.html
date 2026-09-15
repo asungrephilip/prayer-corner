@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Prayer Corner</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-brand">Prayer Corner</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="login.html" class="active">Login</a>
+      <a href="signup.html">Sign Up</a>
+    </div>
+  </nav>
+
+  <main class="auth-page">
+    <div class="auth-container">
+      <div class="auth-header">
+        <h1>Welcome Back</h1>
+        <p>Login to continue your fellowship.</p>
+      </div>
+      <form class="auth-form" id="loginForm">
+        <div class="form-group">
+          <label for="email">Email or Username</label>
+          <input type="text" id="email" name="email" placeholder="Enter your email or username" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        </div>
+        <div class="form-group checkbox-group">
+          <input type="checkbox" id="rememberMe">
+          <label for="rememberMe">Remember me</label>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Login</button>
+      </form>
+      <div class="auth-footer">
+        <p><a href="#" class="forgot-link">Forgot your password?</a></p>
+        <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Prayer Corner. Built with love and faith.</p>
+  </footer>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Login successful! (Frontend only — no backend connected)');
+    });
+  </script>
+</body>
+</html>
