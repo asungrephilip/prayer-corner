@@ -5,7 +5,7 @@ session_start();
 require_once 'config.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: login.html');
+    header('Location: login.php');
     exit;
 }
 
@@ -13,7 +13,7 @@ $identifier = trim($_POST['identifier'] ?? '');
 $password   = $_POST['password'] ?? '';
 
 if ($identifier === '' || $password === '') {
-    header('Location: login.html?error=' . urlencode('Please fill in all fields.'));
+    header('Location: login.php?error=' . urlencode('Please fill in all fields.'));
     exit;
 }
 
@@ -23,7 +23,7 @@ try {
     $user = $stmt->fetch();
 } catch (PDOException $e) {
     error_log('[Prayer Corner] Login error: ' . $e->getMessage());
-    header('Location: login.html?error=' . urlencode('Something went wrong on our end. Please try again.'));
+    header('Location: login.php?error=' . urlencode('Something went wrong on our end. Please try again.'));
     exit;
 }
 
@@ -34,9 +34,9 @@ if ($user !== false && password_verify($password, $user['password_hash'])) {
     $_SESSION['username']  = $user['username'];
     $_SESSION['email']     = $user['email'];
 
-    header('Location: dashboard.php');
+    header('Location: index.php');
     exit;
 }
 
-header('Location: login.html?error=' . urlencode('Invalid email/username or password.'));
+header('Location: login.php?error=' . urlencode('Invalid email/username or password.'));
 exit;
