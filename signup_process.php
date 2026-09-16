@@ -5,7 +5,7 @@ session_start();
 require_once 'config.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: signup.html');
+    header('Location: signup.php');
     exit;
 }
 
@@ -30,7 +30,7 @@ if ($full_name === '' || !preg_match('/^[\p{L} .\'-]{2,100}$/u', $full_name)) {
 }
 
 if ($error !== null) {
-    header('Location: signup.html?error=' . urlencode($error));
+    header('Location: signup.php?error=' . urlencode($error));
     exit;
 }
 
@@ -38,7 +38,7 @@ try {
     $stmt = $pdo->prepare('SELECT id FROM users WHERE email = ? OR username = ?');
     $stmt->execute([$email, $username]);
     if ($stmt->fetch()) {
-        header('Location: signup.html?error=' . urlencode('An account with that email or username already exists.'));
+        header('Location: signup.php?error=' . urlencode('An account with that email or username already exists.'));
         exit;
     }
 
@@ -51,10 +51,10 @@ try {
     $_SESSION['username']  = $username;
     $_SESSION['email']     = $email;
 
-    header('Location: login.html');
+    header('Location: index.php');
     exit;
 } catch (PDOException $e) {
     error_log('[Prayer Corner] Signup error: ' . $e->getMessage());
-    header('Location: signup.html?error=' . urlencode('Something went wrong on our end. Please try again.'));
+    header('Location: signup.php?error=' . urlencode('Something went wrong on our end. Please try again.'));
     exit;
 }

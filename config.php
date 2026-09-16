@@ -35,6 +35,42 @@ function db(): PDO {
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 ) ENGINE=InnoDB'
             );
+
+            $pdo->exec(
+                'CREATE TABLE IF NOT EXISTS prayer_requests (
+                    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                    user_id INT UNSIGNED NOT NULL,
+                    body TEXT NOT NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    answered_at TIMESTAMP NULL DEFAULT NULL,
+                    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+                ) ENGINE=InnoDB'
+            );
+
+            $pdo->exec(
+                'CREATE TABLE IF NOT EXISTS prayer_requests_prayed (
+                    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                    prayer_request_id INT UNSIGNED NOT NULL,
+                    user_id INT UNSIGNED NOT NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    UNIQUE KEY (prayer_request_id, user_id),
+                    FOREIGN KEY (prayer_request_id) REFERENCES prayer_requests(id) ON DELETE CASCADE,
+                    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+                ) ENGINE=InnoDB'
+            );
+
+            $pdo->exec(
+                'CREATE TABLE IF NOT EXISTS testimonies (
+                    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                    prayer_request_id INT UNSIGNED NOT NULL,
+                    user_id INT UNSIGNED NOT NULL,
+                    body TEXT NOT NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    UNIQUE KEY (prayer_request_id, user_id),
+                    FOREIGN KEY (prayer_request_id) REFERENCES prayer_requests(id) ON DELETE CASCADE,
+                    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+                ) ENGINE=InnoDB'
+            );
         } catch (PDOException $e) {
             http_response_code(500);
             error_log('[Prayer Corner] DB error: ' . $e->getMessage());
@@ -46,3 +82,5 @@ function db(): PDO {
 }
 
 $pdo = db();
+
+require_once __DIR__ . '/partials/helpers.php';
