@@ -8,40 +8,10 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/partials/verses.php';
 
-$devotionals = [
-    [
-        'title'   => 'Strength in Silence',
-        'scripture' => 'Psalm 46:10',
-        'text'    => 'In a world that never stops talking, this devotional invites you to find peace in stillness and to listen for the still, small voice of God.',
-        'mins'    => 5,
-    ],
-    [
-        'title'   => 'The Courage to Ask',
-        'scripture' => 'Matthew 7:7',
-        'text'    => 'We often carry burdens alone when God invites us simply to ask. Learn how humble, persistent prayer changes the posture of the heart.',
-        'mins'    => 7,
-    ],
-    [
-        'title'   => 'Walking in Forgiveness',
-        'scripture' => 'Colossians 3:13',
-        'text'    => 'Forgiveness frees the forgiver as much as the forgiven. Reflect on releasing old hurts and extending the grace you have received.',
-        'mins'    => 6,
-    ],
-    [
-        'title'   => 'Gratitude That Transforms',
-        'scripture' => '1 Thessalonians 5:18',
-        'text'    => 'Giving thanks in every circumstance reshapes how we see our day. Discover the practice of counting blessings as a path to joy.',
-        'mins'    => 4,
-    ],
-    [
-        'title'   => 'Trusting God\'s Timing',
-        'scripture' => 'Ecclesiastes 3:1',
-        'text'    => 'Waiting on the Lord can feel endless. This devotional explores how seasons of waiting shape faith and mature our trust in His perfect timing.',
-        'mins'    => 6,
-    ],
-];
+$devotionals = db()->query('SELECT * FROM devotionals ORDER BY id')->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -72,10 +42,10 @@ $devotionals = [
       <?php foreach ($devotionals as $d): ?>
       <div class="feature-card">
         <h3><?php echo htmlspecialchars($d['title']); ?></h3>
-        <p style="line-height: 1.6;"><?php echo htmlspecialchars($d['text']); ?></p>
+        <p style="line-height: 1.6;"><?php echo htmlspecialchars($d['body']); ?></p>
         <div>
           <span class="tag"><?php echo htmlspecialchars($d['scripture']); ?></span>
-          <span class="tag"><?php echo $d['mins']; ?> min read</span>
+          <span class="tag"><?php echo (int)$d['mins']; ?> min read</span>
         </div>
       </div>
       <?php endforeach; ?>
