@@ -741,6 +741,7 @@ body {
 
 /* Share form - floats at bottom-right of the viewport while scrolling */
 .share-card {
+  display: none;
   position: fixed;
   right: 20px;
   bottom: 20px;
@@ -750,6 +751,24 @@ body {
   border-radius: 12px;
   padding: 1.25rem 1.5rem;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+}
+
+.share-btn {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 6;
+  border-radius: 100px;
+  width: 50px;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+  border: 2px solid var(--primary);
+  transition: all 0.2s;
 }
 
 .share-card h3 {
