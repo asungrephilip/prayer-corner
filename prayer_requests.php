@@ -92,7 +92,7 @@ $shared     = isset($_GET['testimony']);
     <div class="notify notify-error"><?php echo h($error); ?></div>
     <?php endif; ?>
 
-    <section class="share-card">
+    <section class="share-card" id="shareCard">
       <h3>Share a Prayer Request</h3>
       <form class="auth-form" action="prayer_request_process.php" method="POST">
         <div class="form-group">
@@ -101,6 +101,27 @@ $shared     = isset($_GET['testimony']);
         <button type="submit" class="btn btn-primary btn-full">Share Request</button>
       </form>
     </section>
+    
+    <button onclick="toggleShareCard()" type="button" class="btn-primary share-btn" id="shareBtn">&#10010;</button>
+
+    <script>
+      const shareCard = document.getElementById('shareCard');
+      const shareBtn  = document.getElementById('shareBtn');
+
+      function toggleShareCard() {
+        const open = shareCard.style.display === 'block';
+        shareCard.style.display = open ? 'none' : 'block';
+        shareBtn.textContent = open ? '\u271A' : '\u2715';
+      }
+
+      document.addEventListener('click', function(e) {
+        if (!shareCard.contains(e.target) && e.target !== shareBtn) {
+          shareCard.style.display = 'none';
+          shareBtn.textContent = '\u271A';
+        }
+      });
+    </script>
+  
 
     <div class="tabs">
       <a href="prayer_requests.php?tab=all" class="tab-link <?php echo $tab === 'all' ? 'active' : ''; ?>">All Requests</a>
