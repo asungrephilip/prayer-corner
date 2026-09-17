@@ -71,6 +71,28 @@ function db(): PDO {
                     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
                 ) ENGINE=InnoDB'
             );
+
+            $pdo->exec(
+                'CREATE TABLE IF NOT EXISTS devotionals (
+                    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                    title VARCHAR(200) NOT NULL,
+                    scripture VARCHAR(100) NOT NULL,
+                    body TEXT NOT NULL,
+                    mins INT UNSIGNED NOT NULL DEFAULT 5,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB'
+            );
+
+            $pdo->exec(
+                'CREATE TABLE IF NOT EXISTS fellowship_events (
+                    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                    title VARCHAR(200) NOT NULL,
+                    schedule VARCHAR(200) NOT NULL,
+                    location VARCHAR(200) NOT NULL,
+                    body TEXT NOT NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB'
+            );
         } catch (PDOException $e) {
             http_response_code(500);
             error_log('[Prayer Corner] DB error: ' . $e->getMessage());

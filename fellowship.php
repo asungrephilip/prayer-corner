@@ -11,39 +11,9 @@ if (!isset($_SESSION['user_id'])) {
 $full_name = htmlspecialchars($_SESSION['full_name'], ENT_QUOTES, 'UTF-8');
 
 require_once __DIR__ . '/partials/verses.php';
+require_once __DIR__ . '/config.php';
 
-$events = [
-    [
-        'title'   => 'Wednesday Prayer Night',
-        'when'    => 'Every Wednesday &middot; 7:00 PM',
-        'where'   => 'Community Hall, Room 2',
-        'text'    => 'Come together for an evening of worship, intercession, and encouragement.',
-    ],
-    [
-        'title'   => 'Friday Bible Study',
-        'when'    => 'Fridays &middot; 6:30 PM',
-        'where'   => 'Main Sanctuary',
-        'text'    => 'Verse-by-verse study of the Gospel of John. All are welcome, bring a friend.',
-    ],
-    [
-        'title'   => 'Community Outreach',
-        'when'    => 'Saturday, October 3 &middot; 9:00 AM',
-        'where'   => 'Church Parking Lot',
-        'text'    => 'Join us as we serve our neighborhood with meals, fellowship, and prayer.',
-    ],
-    [
-        'title'   => 'Women\'s Breakfast',
-        'when'    => 'Second Saturday &middot; 8:30 AM',
-        'where'   => 'Fellowship Hall',
-        'text'    => 'A morning of good food, testimonies, and encouragement for the women of our community.',
-    ],
-    [
-        'title'   => 'Youth Praise Night',
-        'when'    => 'Friday, October 17 &middot; 6:00 PM',
-        'where'   => 'Main Sanctuary',
-        'text'    => 'Worship, games, and the Word for young people. Bring a friend and a joyful heart.',
-    ],
-];
+$events = db()->query('SELECT * FROM fellowship_events ORDER BY id')->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -73,9 +43,9 @@ $events = [
     <section class="features">
       <?php foreach ($events as $e): ?>
       <div class="feature-card">
-        <h3><?php echo $e['title']; ?></h3>
-        <p style="line-height: 1.6;"><?php echo $e['text']; ?></p>
-        <div class="card-meta"><?php echo $e['when']; ?><br><?php echo $e['where']; ?></div>
+        <h3><?php echo htmlspecialchars($e['title']); ?></h3>
+        <p style="line-height: 1.6;"><?php echo htmlspecialchars($e['body']); ?></p>
+        <div class="card-meta"><?php echo htmlspecialchars($e['schedule']); ?><br><?php echo htmlspecialchars($e['location']); ?></div>
       </div>
       <?php endforeach; ?>
     </section>
